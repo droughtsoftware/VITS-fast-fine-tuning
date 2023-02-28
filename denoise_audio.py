@@ -13,6 +13,6 @@ for file in filelist:
                               channels_first=True)
     # merge two channels into one
     wav = wav.mean(dim=0).unsqueeze(0)
-    if sr != 22050:
-        wav = torchaudio.transforms.Resample(orig_freq=sr, new_freq=22050)(wav)
-    torchaudio.save(denoise_audio_dir + file + ".wav", wav, 22050, channels_first=True)
+    if sr != 32000:
+        wav = torchaudio.transforms.Resample(orig_freq=sr, new_freq=32000)(wav)
+    torchaudio.save(denoise_audio_dir + file + ".wav", wav, 32000, channels_first=True)
