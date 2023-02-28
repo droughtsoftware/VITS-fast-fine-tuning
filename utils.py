@@ -63,7 +63,7 @@ def save_checkpoint(model, optimizer, learning_rate, iteration, checkpoint_path)
                 'learning_rate': learning_rate}, checkpoint_path)
 
 
-def summarize(writer, global_step, scalars={}, histograms={}, images={}, audios={}, audio_sampling_rate=22050):
+def summarize(writer, global_step, scalars={}, histograms={}, images={}, audios={}, audio_sampling_rate=32000):
     for k, v in scalars.items():
         writer.add_scalar(k, v, global_step)
     for k, v in histograms.items():
