@@ -57,12 +57,12 @@ if __name__ == "__main__":
                 wav, sr = torchaudio.load(parent_dir + speaker + "/" + wavfile, frame_offset=0, num_frames=-1, normalize=True,
                                           channels_first=True)
                 wav = wav.mean(dim=0).unsqueeze(0)
-                if sr != 22050:
-                    wav = torchaudio.transforms.Resample(orig_freq=sr, new_freq=22050)(wav)
+                if sr != 32000:
+                    wav = torchaudio.transforms.Resample(orig_freq=sr, new_freq=32000)(wav)
                 if wav.shape[1] / sr > 20:
                     print(f"{wavfile} too long, ignoring\n")
                 save_path = parent_dir + speaker + "/" + f"processed_{i}.wav"
-                torchaudio.save(save_path, wav, 22050, channels_first=True)
+                torchaudio.save(save_path, wav, 32000, channels_first=True)
                 # transcribe text
                 lang, text = transcribe_one(save_path)
                 if lang not in list(lang2token.keys()):
