@@ -43,6 +43,18 @@ if __name__ == "__main__":
             'zh': "[ZH]",
             'ja': "[JA]",
         }
+
+    for i, wavfile in enumerate(list(os.walk("./sampled_audio4ft"))[0][2]):
+        wav, sr = torchaudio.load("./sampled_audio4ft" + "/" + wavfile, frame_offset=0, num_frames=-1, normalize=True,
+                                          channels_first=True)
+        wav = wav.mean(dim=0).unsqueeze(0)
+        if sr != 32000:
+            wav = torchaudio.transforms.Resample(orig_freq=sr, new_freq=32000)(wav)
+        if wav.shape[1] / sr > 20:
+            print(f"{wavfile} too long, ignoring\n")
+        save_path = "./sampled_audio4ft" + "/" + wavfile
+        torchaudio.save(save_path, wav, 32000, channels_first=True)
+
     model = whisper.load_model(args.whisper_size)
     parent_dir = "./custom_character_voice/"
     speaker_names = list(os.walk(parent_dir))[0][1]
